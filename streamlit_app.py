@@ -41,16 +41,11 @@ if uploaded_file:
     if 'review' not in df.columns or 'label' not in df.columns:
         st.error("CSV harus mengandung kolom 'review' dan 'label'")
     else:
-        df['review'] = df['review'].astype(str)
-        df['clean'] = df['review'].apply(preprocessing)
-
-        # === Tampilkan data awal ===
-        st.subheader("📄 Data Awal")
-        st.write(df[['review', 'clean', 'label']].head())
-
-        if df['label'].isnull().any():
-            st.warning("Terdapat nilai kosong di kolom label. Baris tersebut akan dihapus.")
-            df = df.dropna(subset=['label'])
+        df = df.dropna(subset=['review', 'label'])
+        
+        # Hilangkan review yang kosong setelah dipreproses
+        df['clean'] = df['review'].astype(str).apply(preprocessing)
+        df = df[df['clean'].str.strip() != '']  # hilangkan hasil preproses kosong
 
         # === Distribusi label ===
         st.subheader("📊 Distribusi Label")
