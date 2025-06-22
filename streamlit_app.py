@@ -35,7 +35,7 @@ st.write("Unggah file CSV dengan kolom `review` dan `label`.")
 uploaded_file = st.file_uploader("Unggah file CSV", type="csv")
 
 if uploaded_file:
-    df = pd.read_csv(uploaded_file)
+    df = pd.read_csv(uploaded_file, delimiter:';')
     
     # Pastikan kolom sesuai
     if 'review' not in df.columns or 'label' not in df.columns:
