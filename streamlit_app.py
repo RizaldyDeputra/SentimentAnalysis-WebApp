@@ -48,6 +48,10 @@ if uploaded_file:
         st.subheader("📄 Data Awal")
         st.write(df[['review', 'clean', 'label']].head())
 
+        if df['label'].isnull().any():
+            st.warning("Terdapat nilai kosong di kolom label. Baris tersebut akan dihapus.")
+            df = df.dropna(subset=['label'])
+
         # === Distribusi label ===
         st.subheader("📊 Distribusi Label")
         col1, col2 = st.columns(2)
